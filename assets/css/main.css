@@ -1,5 +1,6 @@
 @import url(fontawesome-all.min.css);
 @import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400';
+@import 'https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@300;400&display=swap';
 
 /*
 	Stellar by HTML5 UP
@@ -3110,18 +3111,6 @@ input, select, textarea {
 				font-size: 3.25em;
 			}
 
-			#header.alt > * {
-				-moz-transition: opacity 3s ease;
-				-webkit-transition: opacity 3s ease;
-				-ms-transition: opacity 3s ease;
-				transition: opacity 3s ease;
-				-moz-transition-delay: 0.1s;
-				-webkit-transition-delay: 0.1s;
-				-ms-transition-delay: 0.1s;
-				transition-delay: 0.1s;
-				opacity: 1;
-			}
-
 			#header.alt .logo {
 				-moz-transition: opacity 1.25s ease, -moz-transform 0.5s ease;
 				-webkit-transition: opacity 1.25s ease, -webkit-transform 0.5s ease;
@@ -3212,17 +3201,6 @@ input, select, textarea {
 					padding: 3.5em 1em 0.5em 1em ;
 				}
 
-		}
-
-		body.is-preload #header.alt > * {
-			opacity: 0;
-		}
-
-		body.is-preload #header.alt .logo {
-			-moz-transform: scale(0.8) rotate(-30deg);
-			-webkit-transform: scale(0.8) rotate(-30deg);
-			-ms-transform: scale(0.8) rotate(-30deg);
-			transform: scale(0.8) rotate(-30deg);
 		}
 
 /* Nav */
@@ -3800,3 +3778,52 @@ input, select, textarea {
 			}
 
 		}
+
+/* News list */
+
+	.news {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 2em 0;
+	}
+
+		.news li {
+			padding: 1.5em 0;
+			border-top: solid 1px #dddddd;
+		}
+
+			.news li:first-child {
+				border-top: 0;
+				padding-top: 0;
+			}
+
+		.news h3 {
+			font-family: "Source Serif 4", Georgia, serif;
+			letter-spacing: 0;
+			margin: 0 0 0.5em 0;
+		}
+
+	.news-body {
+		display: flex;
+		align-items: center;
+		gap: 1.5em;
+	}
+
+		.news-body p {
+			margin: 0;
+			flex: 1;
+		}
+
+		.news-body .button {
+			flex-shrink: 0;
+		}
+
+	@media screen and (max-width: 736px) {
+
+		.news-body {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1em;
+		}
+
+	}
