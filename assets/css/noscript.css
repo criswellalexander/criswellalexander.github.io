@@ -16,3 +16,32 @@
 		-ms-transform: none;
 		transform: none;
 	}
+
+/* Nav */
+
+	@media screen and (max-width: 736px) {
+
+		#nav-toggle {
+			display: none !important;
+		}
+
+		#nav {
+			display: block;
+			position: relative;
+			top: auto;
+			right: auto;
+			width: 100%;
+			max-width: 100%;
+			box-shadow: none;
+			text-align: center;
+		}
+
+			#nav ul li {
+				display: inline-block;
+			}
+
+				#nav ul li a {
+					padding: 0 0.75em;
+				}
+
+	}

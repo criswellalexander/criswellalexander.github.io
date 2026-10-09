@@ -50,7 +50,7 @@
 				$nav_a
 					.scrolly({
 						speed: 1000,
-						offset: function() { return $nav.height(); }
+						offset: function() { return breakpoints.active('<=small') ? 0 : $nav.height(); }
 					})
 					.on('click', function() {
 
@@ -74,8 +74,13 @@
 					.each(function() {
 
 						var	$this = $(this),
-							id = $this.attr('href'),
-							$section = $(id);
+							id = $this.attr('href');
+
+						// External link? Bail.
+							if (id.charAt(0) != '#')
+								return;
+
+						var $section = $(id);
 
 						// No section for this link? Bail.
 							if ($section.length < 1)
@@ -113,6 +118,68 @@
 
 					});
 
+			// Mobile toggle.
+				var $navToggle = $('#nav-toggle');
+
+				var setNavOpen = function(open) {
+
+					$nav.toggleClass('is-open', open);
+
+					$navToggle
+						.attr('aria-expanded', open ? 'true' : 'false')
+						.toggleClass('fa-bars', !open)
+						.toggleClass('fa-times', open);
+
+				};
+
+				$navToggle.on('click', function(event) {
+
+					event.stopPropagation();
+					setNavOpen(!$nav.hasClass('is-open'));
+
+				});
+
+				// Close on link click, outside click, Escape, or widening past mobile.
+					$nav_a.on('click', function() {
+						setNavOpen(false);
+					});
+
+					$body.on('click', function(event) {
+						if ($(event.target).closest('#nav').length == 0)
+							setNavOpen(false);
+					});
+
+					$window.on('keydown', function(event) {
+						if (event.key == 'Escape')
+							setNavOpen(false);
+					});
+
+					breakpoints.on('>small', function() {
+						setNavOpen(false);
+					});
+
+				// Contrast: dark icon over the white content, light over the background.
+					var updateNavToggleContrast = function() {
+
+						if (!breakpoints.active('<=small'))
+							return;
+
+						var	rect = $navToggle[0].getBoundingClientRect(),
+							x = rect.left + rect.width / 2,
+							y = rect.top + rect.height / 2,
+							$under = $(document.elementsFromPoint(x, y))
+								.not('#nav-toggle, #nav, #nav *')
+								.first();
+
+						$navToggle.toggleClass('on-light',
+							$under.closest('#main').length > 0 && !$under.is('img, .image, .image *'));
+
+					};
+
+					$window.on('scroll resize load', updateNavToggleContrast);
+
+					updateNavToggleContrast();
+
 		}
 
 	// Scrolly.
@@ -120,4 +187,4 @@
 			speed: 1000
 		});
 
-})(jQuery);
+})(jQuery);

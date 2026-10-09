@@ -3314,11 +3314,77 @@ input, select, textarea {
 					font-size: 0.9em;
 				}
 
+	#nav-toggle {
+		display: none;
+	}
+
 		@media screen and (max-width: 736px) {
 
-			#nav {
-				display: none;
+			#nav-toggle {
+				display: block;
+				position: fixed;
+				top: 0.75em;
+				right: 0.75em;
+				width: 2.75em;
+				height: 2.75em;
+				line-height: 2.75em;
+				min-width: 0;
+				padding: 0;
+				background-color: transparent;
+				box-shadow: none;
+				border-radius: 0.25em;
+				color: rgba(247, 247, 247, 0.95) !important;
+				font-size: 1.5em;
+				z-index: 10001;
 			}
+
+				#nav-toggle:hover, #nav-toggle:active {
+					background-color: transparent;
+				}
+
+				#nav-toggle:before {
+					-moz-transition: color 0.2s ease;
+					-webkit-transition: color 0.2s ease;
+					-ms-transition: color 0.2s ease;
+					transition: color 0.2s ease;
+					margin-right: 0;
+					color: rgba(247, 247, 247, 0.95);
+				}
+
+				#nav-toggle.on-light:before {
+					color: #5f4d93;
+				}
+
+			#nav, #nav.alt {
+				display: none;
+				position: fixed;
+				top: 4em;
+				right: 0.75em;
+				left: auto;
+				width: auto;
+				max-width: calc(100% - 1.5em);
+				padding: 0.5em;
+				background-color: rgba(247, 247, 247, 0.98);
+				border-radius: 0.25em;
+				box-shadow: 0 0.25em 1em rgba(0, 0, 0, 0.15);
+				text-align: left;
+				z-index: 10000;
+			}
+
+				#nav.is-open {
+					display: block;
+				}
+
+				#nav ul li, #nav.alt ul li {
+					display: block;
+					margin: 0;
+				}
+
+					#nav ul li a, #nav.alt ul li a {
+						display: block;
+						font-size: 1em;
+						padding: 0 1.25em;
+					}
 
 				#nav + #main {
 					padding-top: 0;

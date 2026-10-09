@@ -87,10 +87,75 @@
 		}
 
 		@include breakpoint('<=small') {
-			display: none;
+			&, &.alt {
+				display: none;
+				position: fixed;
+				top: 4em;
+				right: 0.75em;
+				left: auto;
+				width: auto;
+				max-width: calc(100% - 1.5em);
+				padding: 0.5em;
+				background-color: rgba(247, 247, 247, 0.98);
+				border-radius: _size(border-radius);
+				box-shadow: 0 0.25em 1em rgba(0, 0, 0, 0.15);
+				text-align: left;
+				z-index: _misc(z-index-base);
+
+				ul li {
+					display: block;
+					margin: 0;
+
+					a {
+						display: block;
+						font-size: 1em;
+						padding: 0 1.25em;
+					}
+				}
+			}
+
+			&.is-open {
+				display: block;
+			}
 
 			& + #main {
 				padding-top: 0;
 			}
 		}
 	}
+
+	#nav-toggle {
+		display: none;
+
+		@include breakpoint('<=small') {
+			display: block;
+			position: fixed;
+			top: 0.75em;
+			right: 0.75em;
+			width: 2.75em;
+			height: 2.75em;
+			line-height: 2.75em;
+			min-width: 0;
+			padding: 0;
+			background-color: transparent;
+			box-shadow: none;
+			border-radius: _size(border-radius);
+			color: rgba(247, 247, 247, 0.95) !important;
+			font-size: 1.5em;
+			z-index: _misc(z-index-base) + 1;
+
+			&:hover, &:active {
+				background-color: transparent;
+			}
+
+			&:before {
+				@include vendor('transition', 'color 0.2s ease');
+				margin-right: 0;
+				color: rgba(247, 247, 247, 0.95);
+			}
+
+			&.on-light:before {
+				color: #5f4d93;
+			}
+		}
+	}
