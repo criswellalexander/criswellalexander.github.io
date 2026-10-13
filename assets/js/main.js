@@ -65,58 +65,55 @@
 								.removeClass('active')
 								.removeClass('active-locked');
 
-						// Activate link *and* lock it (so Scrollex doesn't try to activate other links as we're scrolling to this one's section).
+						// Activate link *and* lock it (so the scroll check doesn't activate other links as we're scrolling to this one's section).
 							$this
 								.addClass('active')
 								.addClass('active-locked');
 
-					})
-					.each(function() {
-
-						var	$this = $(this),
-							id = $this.attr('href');
-
-						// External link? Bail.
-							if (id.charAt(0) != '#')
-								return;
-
-						var $section = $(id);
-
-						// No section for this link? Bail.
-							if ($section.length < 1)
-								return;
-
-						// Scrollex.
-							$section.scrollex({
-								mode: 'middle',
-								initialize: function() {
-
-									// Deactivate section.
-										if (browser.canUse('transition'))
-											$section.addClass('inactive');
-
-								},
-								enter: function() {
-
-									// Activate section.
-										$section.removeClass('inactive');
-
-									// No locked links? Deactivate all links and activate this section's one.
-										if ($nav_a.filter('.active-locked').length == 0) {
-
-											$nav_a.removeClass('active');
-											$this.addClass('active');
-
-										}
-
-									// Otherwise, if this section's link is the one that's locked, unlock it.
-										else if ($this.hasClass('active-locked'))
-											$this.removeClass('active-locked');
-
-								}
-							});
-
 					});
+
+			// Active link: last linked section whose top has reached the middle of the screen, else Home.
+				var	$nav_home = $nav_a.filter('[href="#header"]'),
+					$nav_sections = $nav_a.filter(function() {
+						var id = $(this).attr('href');
+						return id.charAt(0) == '#' && this !== $nav_home[0] && $(id).length > 0;
+					});
+
+				var updateNavActive = function() {
+
+					var	middle = $window.scrollTop() + $window.height() / 2,
+						$current = $nav_home;
+
+					$nav_sections.each(function() {
+						if ($($(this).attr('href')).offset().top <= middle)
+							$current = $(this);
+					});
+
+					// A clicked link stays locked until the scroll reaches its section.
+						var $locked = $nav_a.filter('.active-locked');
+
+						if ($locked.length > 0) {
+
+							if (!$locked.is($current))
+								return;
+
+							$locked.removeClass('active-locked');
+
+						}
+
+					$nav_a.removeClass('active');
+					$current.addClass('active');
+
+				};
+
+				// Only on pages with an in-page Home link (the Research page sets its own highlight).
+					if ($nav_home.length > 0) {
+
+						$window.on('scroll resize load', updateNavActive);
+
+						updateNavActive();
+
+					}
 
 			// Mobile toggle.
 				var $navToggle = $('#nav-toggle');
